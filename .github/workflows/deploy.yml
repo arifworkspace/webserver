@@ -17,4 +17,6 @@ jobs:
           script: |
             cd /var/www/webserver
             sudo git pull
-            pm2 restart webserver.config.js
+            "[ -s ~/.nvm/nvm.sh ] && source ~/.nvm/nvm.sh"
+            nvm use stable
+            pm2 startOrReload webserver.config.js
