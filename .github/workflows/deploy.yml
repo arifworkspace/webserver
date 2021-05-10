@@ -17,6 +17,9 @@ jobs:
           script: |
             cd /var/www/webserver
             sudo git pull
-            "[ -s ~/.nvm/nvm.sh ] && source ~/.nvm/nvm.sh"
+            export NVM_DIR="$HOME/.nvm"
+            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
             nvm use stable
+            node -v
+            npm -v
             pm2 startOrReload webserver.config.js
