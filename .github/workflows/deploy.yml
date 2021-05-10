@@ -22,5 +22,5 @@ jobs:
             nvm use stable
             node -v
             npm -v
-            sudo npm install
+            npm install
             pm2 startOrReload webserver.config.js
