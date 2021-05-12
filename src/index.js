@@ -8,6 +8,10 @@ app.get("/", (req, res) => {
   res.send({ status: "Web server is up and running" });
 });
 
+app.get("/greeting", (req, res) => {
+  res.send({ msg: 'Hello from API!' });
+});
+
 app.get("/data", (req, res) => {
   res.send({
     data: [
