@@ -21,22 +21,12 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
           repository: arifjmamun/webserver
           tag_with_ref: true
-  # deploy:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Deploy Webserver
-  #       uses: appleboy/ssh-action@v0.1.2
-  #       with:
-  #         host: ${{secrets.SSH_HOST}}
-  #         username: ${{ secrets.SSH_USERNAME }}
-  #         key: ${{ secrets.SSH_PRIVATE_KEY }}
-  #         script: |
-  #           cd /var/www/webserver
-  #           sudo git pull
-  #           export NVM_DIR="$HOME/.nvm"
-  #           [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-  #           nvm use stable
-  #           node -v
-  #           npm -v
-  #           npm install
-  #           pm2 startOrReload webserver.config.js
+      - name: Deploy Webserver
+        uses: appleboy/ssh-action@v0.1.2
+        with:
+          host: ${{secrets.SSH_HOST}}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            docker pull arifjmamun/webserver:latest
+            docker run -p 3000:3000 -d --name webserver --restart=always arifjmamun/webserver:latest
