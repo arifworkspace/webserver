@@ -23,11 +23,15 @@ jobs:
           tag_with_ref: true
       - name: Deploy Webserver
         uses: appleboy/ssh-action@v0.1.2
+        env:
+          DOCKER_USER: ${{ secrets.DOCKER_USER }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         with:
           host: ${{secrets.SSH_HOST}}
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
+            docker login --username "$DOCKER_USER" --password "$DOCKER_PASSWORD"
             docker rm -f webserver
             docker pull arifjmamun/webserver
             docker run -p 3000:3000 -d --name webserver --restart=always arifjmamun/webserver:latest
